@@ -52,7 +52,7 @@ npm start
 This starts up a server on port 8080. The server comes with Swagger UI (see startup logs for URL), where you can try out
 your server.
 
-### Test Client and Server
+### Test your Client and Server
 Your SDK code will be configured to run API calls against the `host` value in our Swagger specification, in this case 
 our NodeJS server on localhost port 8080. 
 
