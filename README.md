@@ -1,116 +1,86 @@
-# swagger-java-client
+## Prerequisites
+The steps below outline how to install and use Swagger Codegen on a Mac environment with Homebrew. Refer to the official 
+[Swagger Editor Documentation](https://swagger.io/docs/swagger-tools/#installation-11) for other install options. 
 
-## Requirements
+You will need the following installed:
+* Java 7 or higher
+* Maven 
+* NPM
+* NodeJS
 
-Building the API client library requires [Maven](https://maven.apache.org/) to be installed.
 
-## Installation
-
-To install the API client library to your local Maven repository, simply execute:
+## Install swagger-codegen:
 
 ```shell
+brew install swagger-codegen
+```
+
+## Usage
+
+### Client SDK
+Generate the SDK with the following command:
+```shell
+swagger-codegen generate --input-spec my-blog-service.yaml --lang java --output generated-code --api-package com.blog.api --model-package com.blog.model
+```
+This will generate your SDK in a folder called `generated-code`. Review the file `README.md` within that folder for
+instructions on how to integrate the SDK into your own project.
+
+Use Maven and the generated `POM.xml` to execute the tests:
+```shell
+mvn -f generated-code/pom.xml test
+``` 
+These tests don't do anything yet, but you can modify them at a later stage to test against your server.
+
+Install this package into your local Maven repo:
+```shell
+cd generated-code
 mvn install
 ```
 
-To deploy it to a remote Maven repository instead, configure the settings of the repository and execute:
-
+### Server Stub
+Generate a NodeJS Server with the following commmand:
 ```shell
-mvn deploy
+swagger-codegen generate -i my-blog-service.yaml -l nodejs-server -o server
 ```
+This will generate your code in a folder `server`. Review the file `README.md` folder with that folder.
 
-Refer to the [official documentation](https://maven.apache.org/plugins/maven-deploy-plugin/usage.html) for more information.
-
-### Maven users
-
-Add this dependency to your project's POM:
-
-```xml
-<dependency>
-    <groupId>io.swagger</groupId>
-    <artifactId>swagger-java-client</artifactId>
-    <version>1.0.0</version>
-    <scope>compile</scope>
-</dependency>
+Use the following command to run the server:
+```shell
+cd server
+npm start
 ```
+This starts up a server on port 8080. The server comes with Swagger UI (see startup logs for URL), where you can try out
+your server.
 
-### Gradle users
+### Test Client and Server
+Your SDK code will be configured to run API calls against the `host` value in our Swagger specification, in this case 
+our NodeJS server on localhost port 8080. 
 
-Add this dependency to your project's build file:
+Create a new Java project and add your new client as a dependency. See `README.md` in the `generated-code` folder for 
+details on how to do this.
 
-```groovy
-compile "io.swagger:swagger-java-client:1.0.0"
+Add the following code, which will call your NodeJS server to create a new blog post:
 ```
-
-### Others
-
-At first generate the JAR by executing:
-
-    mvn package
-
-Then manually install the following JARs:
-
-* target/swagger-java-client-1.0.0.jar
-* target/lib/*.jar
-
-## Getting Started
-
-Please follow the [installation](#installation) instruction and execute the following Java code:
-
-```java
-
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.BlogpostApi;
-
-import java.io.File;
-import java.util.*;
-
-public class BlogpostApiExample {
-
-    public static void main(String[] args) {
-        
-        BlogpostApi apiInstance = new BlogpostApi();
-        BlogPost body = new BlogPost(); // BlogPost | New blog post
-        try {
-            BlogPost result = apiInstance.addBlogPost(body);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling BlogpostApi#addBlogPost");
-            e.printStackTrace();
-        }
+public static void main(String[] args) {
+    BlogpostApi apiInstance = new BlogpostApi();
+    BlogPost request = new BlogPost();
+    request.setTitle("My blog title");
+    request.setBody("This is my sample blog post");
+    try {
+        BlogPost response = apiInstance.addBlogPost(request);
+        System.out.println(response);
+    } catch (ApiException e) {
+        System.err.println("Exception when calling BlogpostApi#addBlogPost");
+        e.printStackTrace();
     }
 }
-
 ```
-
-## Documentation for API Endpoints
-
-All URIs are relative to *http://localhost:8080/my-blog-service/v1*
-
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*BlogpostApi* | [**addBlogPost**](docs/BlogpostApi.md#addBlogPost) | **POST** /blog | Add a blog post
-*BlogpostApi* | [**deleteBlogPost**](docs/BlogpostApi.md#deleteBlogPost) | **DELETE** /blog/{id} | Deletes a blog post
-*BlogpostApi* | [**getBlogPostById**](docs/BlogpostApi.md#getBlogPostById) | **GET** /blog/{id} | Find blog post by ID
-*BlogpostApi* | [**updateBlogPost**](docs/BlogpostApi.md#updateBlogPost) | **PUT** /blog | Update an existing blog post
-
-
-## Documentation for Models
-
- - [BlogPost](docs/BlogPost.md)
-
-
-## Documentation for Authorization
-
-All endpoints do not require authorization.
-Authentication schemes defined for the API:
-
-## Recommendation
-
-It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issues.
-
-## Author
-
-support@my-blog-service.com
+If everything goes to plan, you will see the following in the console:
+```shell
+class BlogPost {
+    id: 1
+    title: My Blog Post
+    body: This is my blog about Swagger
+}
+```
 
