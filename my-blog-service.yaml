@@ -40,23 +40,6 @@ paths:
             $ref: "#/definitions/BlogPost"
         405:
           description: "Invalid input"
-      x-samples:
-        -
-          name: createBlogPost
-          ordering: 101
-          request:
-            application/json: |-
-              {
-                "title": "My Blog Post",
-                "body": "This is my blog about Swagger"
-              }
-          response:  
-            application/json: |-
-              {
-                "id": 1,
-                "title": "My Blog Post",
-                "body": "This is my blog about Swagger"
-              }
     put:
       tags:
       - "blogpost"
@@ -84,26 +67,6 @@ paths:
           description: "Blog post not found"
         405:
           description: "Validation exception"
-      x-samples:
-        -
-          name: updateBlogPost
-          ordering: 102
-          overrides:
-              - id: createBlogPost.id
-          request:
-            application/json: |-
-              {
-                "id": 1,
-                "title": "My Updated Blog Post",
-                "body": "This is my updated blog about Swagger"
-              }
-          response:  
-            application/json: |-
-              {
-                "id": 1,
-                "title": "My Updated Blog Post",
-                "body": "This is my updated blog about Swagger"
-              }                           
   /blog/{id}:
     get:
       tags:
