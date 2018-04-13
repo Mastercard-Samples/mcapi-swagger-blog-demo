@@ -42,7 +42,7 @@ Generate a NodeJS Server with the following commmand:
 ```
 swagger-codegen generate -i my-blog-service.yaml -l nodejs-server -o server
 ```
-This will generate your code in a folder `server`. Review the file `README.md` folder with that folder.
+This will generate your code in a folder `server`. Review the file `README.md` folder within that folder.
 
 Use the following command to run the server:
 ```
