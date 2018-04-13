@@ -9,9 +9,9 @@ You will need the following installed:
 * NodeJS
 
 
-## Install swagger-codegen:
+## Install Swagger Codegen:
 
-```shell
+```
 brew install swagger-codegen
 ```
 
@@ -19,33 +19,33 @@ brew install swagger-codegen
 
 ### Client SDK
 Generate the SDK with the following command:
-```shell
+```
 swagger-codegen generate --input-spec my-blog-service.yaml --lang java --output generated-code --api-package com.blog.api --model-package com.blog.model
 ```
 This will generate your SDK in a folder called `generated-code`. Review the file `README.md` within that folder for
 instructions on how to integrate the SDK into your own project.
 
 Use Maven and the generated `POM.xml` to execute the tests:
-```shell
+```
 mvn -f generated-code/pom.xml test
 ``` 
 These tests don't do anything yet, but you can modify them at a later stage to test against your server.
 
 Install this package into your local Maven repo:
-```shell
+```
 cd generated-code
 mvn install
 ```
 
 ### Server Stub
 Generate a NodeJS Server with the following commmand:
-```shell
+```
 swagger-codegen generate -i my-blog-service.yaml -l nodejs-server -o server
 ```
 This will generate your code in a folder `server`. Review the file `README.md` folder with that folder.
 
 Use the following command to run the server:
-```shell
+```
 cd server
 npm start
 ```
@@ -76,7 +76,7 @@ public static void main(String[] args) {
 }
 ```
 If everything goes to plan, you will see the following in the console:
-```shell
+```
 class BlogPost {
     id: 1
     title: My Blog Post
