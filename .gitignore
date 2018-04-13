@@ -20,3 +20,5 @@ target
 .gradle
 .idea
 build
+generated-code
+server
