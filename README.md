@@ -38,7 +38,7 @@ mvn install
 ```
 
 ### Server Stub
-Generate a NodeJS Server with the following commmand:
+Generate a NodeJS Server with the following command:
 ```
 swagger-codegen generate -i my-blog-service.yaml -l nodejs-server -o server
 ```
