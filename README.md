@@ -8,7 +8,6 @@ You will need the following installed:
 * NPM
 * NodeJS
 
-
 ## Install Swagger Codegen:
 
 ```
